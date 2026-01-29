@@ -1,0 +1,49 @@
+site_name: OpenSymbolicAI CLI
+site_url: https://opensymbolicai.github.io/cli-py
+repo_url: https://github.com/OpenSymbolicAI/cli-py
+repo_name: OpenSymbolicAI/cli-py
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.sections
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - API Reference:
+      - Overview: api/index.md
+      - App: api/app.md
+      - Models: api/models.md
+      - Scanner: api/scanner.md
+      - Model Cache: api/model_cache.md
+      - Screens: api/screens.md
