@@ -1,4 +1,4 @@
-"""Agent scanner utility to discover PlanExecute subclasses."""
+"""Agent scanner utility to discover PlanExecute, DesignExecute, and GoalSeeking subclasses."""
 
 import ast
 import json
@@ -31,7 +31,7 @@ class DiscoveredAgent(BaseModel):
     version: str = Field(default="", description="Agent version")
     base_class: str = Field(
         default="PlanExecute",
-        description="Base class: 'PlanExecute' or 'Planner'",
+        description="Base class: 'PlanExecute', 'Planner', 'DesignExecute', or 'GoalSeeking'",
     )
     methods: list[DiscoveredMethod] = Field(
         default_factory=list, description="List of primitive and decomposition methods"
@@ -211,14 +211,14 @@ def _extract_agent_info_from_ast(file_path: Path) -> list[DiscoveredAgent]:
     except (SyntaxError, OSError):
         return agents
 
-    # Valid base class names for PlanExecute agents
-    valid_base_names = {"PlanExecute", "Planner"}
+    # Valid base class names for agents
+    valid_base_names = {"PlanExecute", "Planner", "DesignExecute", "GoalSeeking"}
 
     for class_node in ast.walk(tree):
         if not isinstance(class_node, ast.ClassDef):
             continue
 
-        # Check if class inherits from PlanExecute or Planner
+        # Check if class inherits from a known agent base class
         base_class_name = None
         for base in class_node.bases:
             if isinstance(base, ast.Name) and base.id in valid_base_names:
@@ -291,7 +291,7 @@ def _extract_agent_info_from_ast(file_path: Path) -> list[DiscoveredAgent]:
 
 
 def scan_directory_for_agents(directory: Path) -> list[DiscoveredAgent]:
-    """Scan a directory for Python files containing PlanExecute/Planner subclasses.
+    """Scan a directory for Python files containing agent subclasses.
 
     Args:
         directory: The directory to scan.
@@ -316,7 +316,7 @@ def scan_directory_for_agents(directory: Path) -> list[DiscoveredAgent]:
 
 
 def scan_file_for_agents(file_path: Path) -> list[DiscoveredAgent]:
-    """Scan a single Python file for PlanExecute/Planner subclasses.
+    """Scan a single Python file for agent subclasses.
 
     Args:
         file_path: Path to the Python file to scan.

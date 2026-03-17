@@ -9,7 +9,7 @@ dependencies = [
     "textual>=0.89.0",
     "pydantic>=2.0",
     "python-dotenv>=1.0.0",
-    "opensymbolicai-core",
+    "opensymbolicai-core>=0.7.0,<0.8.0",
     "httpx>=0.28.1",
 ]
 
