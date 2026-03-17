@@ -1,5 +1,5 @@
 # OpenSymbolicAI CLI
-
+Distributed Agent Grid for Open Source Maintenance. No token goes unused.
 Interactive TUI for discovering and running OpenSymbolicAI agents.
 
 ## Quick Start
