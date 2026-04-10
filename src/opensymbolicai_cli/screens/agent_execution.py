@@ -663,6 +663,15 @@ class AgentExecutionScreen(Screen[None]):
         if result.plan:
             debug_parts.append(f"[bold cyan]Plan:[/]\n{result.plan}")
 
+        # Raw LLM input/output from plan attempts
+        if result.plan_attempts:
+            for i, attempt in enumerate(result.plan_attempts):
+                if attempt.plan_generation and attempt.plan_generation.llm_interaction:
+                    interaction = attempt.plan_generation.llm_interaction
+                    label = f"Attempt {i + 1}" if len(result.plan_attempts) > 1 else "LLM"
+                    debug_parts.append(f"[bold cyan]{label} Prompt:[/]\n{interaction.prompt}")
+                    debug_parts.append(f"[bold cyan]{label} Response:[/]\n{interaction.response}")
+
         if debug_parts:
             debug_text = "[dim]--- Debug Info ---[/]\n" + "\n".join(debug_parts)
             conversation.add_message(debug_text, "system")
